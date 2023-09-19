@@ -5,12 +5,19 @@
     "lib": ["es6"],
     "allowJs": true,
     "outDir": "build",
-    "rootDir": "src",
+    "baseUrl": "./",
     "strict": true,
     "esModuleInterop": true,
     "types": ["node", "jest"],
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "paths": {
+      "@config/*": ["src/configs/*"],
+      "@libs/*": ["src/libs/*"],
+      "@modules/*": ["src/modules/*"]
+    },
+    "strictPropertyInitialization": false,
+    "experimentalDecorators": true
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "test.ts"],
   "exclude": ["src/**/*.spec.ts"]
 }
