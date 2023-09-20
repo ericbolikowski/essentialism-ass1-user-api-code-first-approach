@@ -10,9 +10,13 @@ This is intentionally over-engineered. The goal was to learn and practise DDD co
 
 This project implements the following use cases:
 
+- Create a user
+- Get a user
+- Edit a user
+
 ## Artefact Responsibilities
 
-In this project, we implement Domain-Driven Design (DDD) concepts as specific code artefacts, with each file named after its corresponding artefact and holding a distinct responsibility. The following artefacts and their responsibilities are used:
+In this project, we implement certain Domain-Driven Design (DDD) concepts as specific code artefacts, with each file named after its corresponding artefact and holding a distinct responsibility. The following artefacts and their responsibilities are used:
 
 - **Repository**: persist and retrieve entity objects to/from a data store (e.g. database), via an ORM if necessary
 - **Entity**: represent a domain object with a unique identity
@@ -21,6 +25,10 @@ In this project, we implement Domain-Driven Design (DDD) concepts as specific co
 - **Use Case**: handle the commands and queries received from the client, and return the appropriate response
 - **Command**: defines a request to change the state of the system and, if applicable, the data required to do so
 - **Query**: defines a request to retrieve data from the system and, if applicable, the data required to do so
+
+The following concepts have not been implemented, but could have been interesting to use:
+
+- Events
 
 ## Interface
 
