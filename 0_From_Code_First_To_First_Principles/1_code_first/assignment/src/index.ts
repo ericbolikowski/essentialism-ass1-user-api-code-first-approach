@@ -1,2 +1,7 @@
-console.log("test");
-console.log("test2");
+import { serve } from "@hono/node-server";
+import { Hono } from "hono";
+
+const app = new Hono();
+app.get("/", (c) => c.text("Hello Node.js!"));
+
+serve(app);

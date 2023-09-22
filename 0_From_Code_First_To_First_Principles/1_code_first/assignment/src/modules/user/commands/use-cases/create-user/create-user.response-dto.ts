@@ -1,3 +1,3 @@
-import { IdResponse } from "@libs/api/id.response.dto";
+import { OkResponseDto } from "@libs/api/ok.response.dto";
 
-export class CreateUserResponseDto extends IdResponse {}
+export class CreateUserResponseDto extends OkResponseDto {}

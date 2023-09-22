@@ -16,7 +16,8 @@
       "@modules/*": ["src/modules/*"]
     },
     "strictPropertyInitialization": false,
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
   },
   "include": ["src/**/*", "test.ts"],
   "exclude": ["src/**/*.spec.ts"]
