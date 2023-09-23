@@ -1,3 +1,5 @@
+import { errorToString } from "./error-to-string";
+
 function isPromise<T>(value: any): value is Promise<T> {
   return !!value && typeof value.then === "function";
 }
@@ -5,7 +7,7 @@ function isPromise<T>(value: any): value is Promise<T> {
 // Source: https://khalilstemmler.com/articles/enterprise-typescript-nodejs/handling-errors-result-class/
 // + iterations thanks to ChatGPT and experiments
 
-class Result<T> {
+export class Result<T> {
   public isSuccess: boolean;
   public isFailure: boolean;
   public error?: string;
@@ -94,7 +96,7 @@ class Result<T> {
   }
 }
 
-class ResultAsync {
+export class ResultAsync {
   public static fromPromiseToResultPromise<T>(
     promise: () => Promise<T> | Promise<T>
   ) {
@@ -108,7 +110,7 @@ class ResultAsync {
         }
         return Result.ok(result);
       } catch (err) {
-        return Result.fail(err);
+        return Result.fail(errorToString(err));
       }
     };
   }
@@ -121,7 +123,7 @@ class ResultAsync {
         const result = fn();
         return Result.ok(result);
       } catch (err) {
-        return Result.fail(err);
+        return Result.fail(errorToString(err));
       }
     };
   }

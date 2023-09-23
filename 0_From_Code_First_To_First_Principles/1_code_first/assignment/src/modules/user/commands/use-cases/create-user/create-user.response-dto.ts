@@ -1,3 +1,3 @@
-import { OkResponseDto } from "@libs/api/ok.response.dto";
+import { OkResponseDto } from "src/libs/api/ok.response.dto";
 
-export class CreateUserResponseDto extends OkResponseDto {}
+// export class CreateUserResponseDto extends OkResponseDto {}

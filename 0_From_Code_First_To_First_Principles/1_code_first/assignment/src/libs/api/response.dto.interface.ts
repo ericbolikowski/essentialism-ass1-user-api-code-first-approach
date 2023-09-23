@@ -1,4 +1,5 @@
 interface IResponseDto {
-  data: any
-  error: 
+  data: any;
+  error: any;
+  success: boolean;
 }

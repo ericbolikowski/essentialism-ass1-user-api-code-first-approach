@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "es2022",
     "module": "commonjs",
     "lib": ["es6"],
     "allowJs": true,
@@ -10,11 +10,6 @@
     "esModuleInterop": true,
     "types": ["node", "jest"],
     "skipLibCheck": true,
-    "paths": {
-      "@config/*": ["src/configs/*"],
-      "@libs/*": ["src/libs/*"],
-      "@modules/*": ["src/modules/*"]
-    },
     "strictPropertyInitialization": false,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true

@@ -1,3 +1,3 @@
-export interface IUserRepository {
-  find;
-}
+// export interface IUserRepository {
+//   create;
+// }
