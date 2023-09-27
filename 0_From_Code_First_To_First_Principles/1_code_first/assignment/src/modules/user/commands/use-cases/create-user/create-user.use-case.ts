@@ -14,8 +14,9 @@ export class CreateUserUseCase implements ICreateUserUseCase {
   constructor(private readonly repository: IUserRepository) {}
 
   @Log({
-    startMessage: "Creating user...",
-    endMessage: "User created, result:",
+    startMessage: "Running CreateUser with input:",
+    logInputValues: true,
+    endMessage: "Done, result:",
     logReturnValue: true,
   })
   async execute(message: CreateUserCommand) {

@@ -1,5 +1,6 @@
 export function Log(options: {
   startMessage?: string;
+  logInputValues?: boolean;
   endMessage?: string;
   logReturnValue?: boolean;
 }) {
@@ -12,6 +13,7 @@ export function Log(options: {
 
     descriptor.value = function (...args: any[]) {
       if (options.startMessage) console.log(options.startMessage);
+      if (options.logInputValues) console.log(...args);
 
       const result = originalMethod.apply(this, args);
 
