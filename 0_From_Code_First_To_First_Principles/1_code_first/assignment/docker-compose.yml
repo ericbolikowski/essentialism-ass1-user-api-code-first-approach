@@ -5,6 +5,8 @@ services:
     build: .
     ports:
       - "3000:3000"
+      # For debugging of the nodejs process
+      - "9229:9229"
     depends_on:
       - db
     environment:

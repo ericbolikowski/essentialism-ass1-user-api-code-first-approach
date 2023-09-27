@@ -1,6 +1,12 @@
 import { IsEmail, Length, MinLength } from "class-validator";
+import { UserEntity } from "../../../entities/user.entity";
+import { IRequestDto } from "../../../../../libs/api/request.dto.interface";
 
-export class CreateUserRequestDto {
+export class CreateUserRequestDto
+  implements
+    IRequestDto,
+    Pick<UserEntity, "email" | "username" | "firstName" | "lastName">
+{
   @IsEmail()
   email: string;
 

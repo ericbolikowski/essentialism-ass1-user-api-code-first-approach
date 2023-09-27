@@ -4,29 +4,27 @@ import type { PostgreSqlDriver } from "@mikro-orm/postgresql";
 import { error } from "console";
 import { UserEntity } from "./entities/user.entity";
 import mikroOrmConfig from "../..//config/mikro-orm.config";
+import { UserRepository } from "./repository/user.repository";
+import { CreateUserUseCase } from "./commands/use-cases/create-user/create-user.use-case";
+import { CreateUserController } from "./commands/use-cases/create-user/create-user.controller";
 
 export async function bootstrapModule(hono: Hono) {
-  console.log("bootstrapping user module...");
+  console.log("boostrapping user module...");
 
-  // I want this to use the config from the config file ("../../config/mikro-orm.config"),
-  // but it's not working for some reason... mysterious TS errors
-  const orm = await MikroORM.init<PostgreSqlDriver>({
-    entities: ["./dist/src/modules/user/entities/"],
-    entitiesTs: ["./src/modules/user/entities/"],
-    type: "postgresql",
-    clientUrl: process.env.DATABASE_URL,
+  const repo = await UserRepository.build();
+  const useCase = new CreateUserUseCase(repo);
+  const controller = new CreateUserController(useCase);
+
+  hono.post("/users/new", async (c) => {
+    const body = await c.req.json();
+    console.log("body:");
+    console.log(body);
+    const result = await controller.invoke(body);
+    return c.json(result, result.httpStatusCode);
   });
-
-  const em = orm.em.fork();
-
-  // const user = new UserEntity();
-  // user.email = "eric@binarylights.com";
-  // user.username = "erictest";
-  // user.firstName = "Eric";
-  // user.lastName = "Bolikowski";
-  // user.password = "hello";
-
-  // em.persistAndFlush(user);
-
   hono.get("/", (c: Context) => c.text("Hello Node.js!"));
 }
+
+// How do "context objects" work? Is it something that I could use? To pass data
+// around, but alos get various utilities when needed? Instead of doing a kind of
+// prop drilling, just passing things around...

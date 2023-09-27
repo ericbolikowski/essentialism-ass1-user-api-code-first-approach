@@ -1,3 +1,10 @@
-import { OkResponseDto } from "src/libs/api/ok.response.dto";
+import { OkResponseDto } from "../../../../../libs/api/ok.response.dto";
+import { UserEntity } from "../../../entities/user.entity";
 
-// export class CreateUserResponseDto extends OkResponseDto {}
+interface DtoUserProps
+  extends Pick<
+    UserEntity,
+    "id" | "email" | "username" | "firstName" | "lastName"
+  > {}
+
+export class CreateUserResponseDto extends OkResponseDto<DtoUserProps> {}
