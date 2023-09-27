@@ -17,9 +17,9 @@ The assumption is that this approach means ...
 
 This project implements the following use cases:
 
-- Create a user
-- Get a user
-- Edit a user
+- Create a user ✅
+- Get a user ⏳
+- Edit a user ⏳
 
 ## Artefact Responsibilities
 
