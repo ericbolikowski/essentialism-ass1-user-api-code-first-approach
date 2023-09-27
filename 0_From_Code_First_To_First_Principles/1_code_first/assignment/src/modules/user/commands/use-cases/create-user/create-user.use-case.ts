@@ -1,4 +1,5 @@
 import { IUseCase } from "../../../../../libs/ddd/use-case.interface";
+import { Log } from "../../../../../libs/log/log";
 import { Result } from "../../../../../libs/utils/result";
 import { UserEntity } from "../../../entities/user.entity";
 import { generateRandomPassword } from "../../../helpers/generate-random-password";
@@ -12,6 +13,11 @@ import { ICreateUserUseCase } from "./contracts/create-user.use-case.interface";
 export class CreateUserUseCase implements ICreateUserUseCase {
   constructor(private readonly repository: IUserRepository) {}
 
+  @Log({
+    startMessage: "Creating user...",
+    endMessage: "User created, result:",
+    logReturnValue: true,
+  })
   async execute(message: CreateUserCommand) {
     const user = new UserEntity();
     user.email = message.email;
