@@ -19,6 +19,7 @@ export class UserRepository implements IUserRepository {
       type: "postgresql",
       clientUrl: process.env.DATABASE_URL,
     });
+    await orm.getMigrator().up();
 
     return new UserRepository(orm);
   }
