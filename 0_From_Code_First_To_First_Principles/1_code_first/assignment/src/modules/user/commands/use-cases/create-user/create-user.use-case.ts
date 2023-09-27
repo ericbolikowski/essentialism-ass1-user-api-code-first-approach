@@ -5,9 +5,9 @@ import { generateRandomPassword } from "../../../helpers/generate-random-passwor
 import {
   IUserRepository,
   UserRepositoryError,
-} from "../../../repository/user.repository.interface";
-import { CreateUserCommand } from "./create-user.command";
-import { ICreateUserUseCase } from "./create-user.use-case.interface";
+} from "../../../repository/contracts/user.repository.interface";
+import { CreateUserCommand } from "./contracts/create-user.command";
+import { ICreateUserUseCase } from "./contracts/create-user.use-case.interface";
 
 export class CreateUserUseCase implements ICreateUserUseCase {
   constructor(private readonly repository: IUserRepository) {}

@@ -1,6 +1,6 @@
 import { IsEmail, Length, MinLength } from "class-validator";
-import { UserEntity } from "../../../entities/user.entity";
-import { IRequestDto } from "../../../../../libs/api/request.dto.interface";
+import { IRequestDto } from "../../../../../../libs/api/request.dto.interface";
+import { UserEntity } from "../../../../entities/user.entity";
 
 export class CreateUserRequestDto
   implements

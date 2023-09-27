@@ -4,7 +4,12 @@
 
 ## Note
 
-This is intentionally over-engineered. The goal was to learn and practise DDD concepts.
+This is **intentionally over-engineered**. The goal was to learn and practise DDD concepts.
+
+The assumption is that this approach means ...
+
+- the complexity is too high for a small project like this with only a few endpoints, but ...
+- the complexity is essential for a larger project with many endpoints, but the scalability will be constant and the complexity will increase linearly and not exponentially the more endpoints are added
 
 ## Use cases
 

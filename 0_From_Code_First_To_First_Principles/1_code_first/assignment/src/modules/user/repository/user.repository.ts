@@ -3,7 +3,7 @@ import { UserEntity } from "../entities/user.entity";
 import {
   IUserRepository,
   UserRepositoryError,
-} from "./user.repository.interface";
+} from "./contracts/user.repository.interface";
 import { MikroORM, PostgreSqlDriver } from "@mikro-orm/postgresql";
 import { errorToString } from "../../../libs/utils/error-to-string";
 

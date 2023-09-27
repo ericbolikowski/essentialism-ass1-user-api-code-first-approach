@@ -1,5 +1,5 @@
-import { Result } from "../../../libs/utils/result";
-import { UserEntity } from "../entities/user.entity";
+import { Result } from "../../../../libs/utils/result";
+import { UserEntity } from "../../entities/user.entity";
 
 export type UserRepositoryError =
   | "EMAIL_ALREADY_EXISTS"

@@ -1,12 +1,12 @@
 import { plainToClass } from "class-transformer";
 import { FailResponseDto } from "../../../../../libs/api/fail.response.dto";
 import { IController } from "../../../../../libs/ddd/controller.interface";
-import { CreateUserRequestDto } from "./create-user.request-dto";
-import { CreateUserResponseDto } from "./create-user.response-dto";
 import { validate } from "class-validator";
 import { IUseCase } from "../../../../../libs/ddd/use-case.interface";
-import { ICreateUserController } from "./create-user.controller.interface";
-import { ICreateUserUseCase } from "./create-user.use-case.interface";
+import { ICreateUserController } from "./contracts/create-user.controller.interface";
+import { ICreateUserUseCase } from "./contracts/create-user.use-case.interface";
+import { CreateUserRequestDto } from "./contracts/create-user.request-dto";
+import { CreateUserResponseDto } from "./contracts/create-user.response-dto";
 
 export class CreateUserController implements ICreateUserController {
   constructor(private readonly useCase: ICreateUserUseCase) {}
