@@ -20,9 +20,7 @@ export async function bootstrapModule(hono: Hono) {
     const result = await controller.invoke(body);
     return c.json(result, result.httpStatusCode);
   });
-  hono.get("/", (c: Context) => c.text("Hello Node.js!"));
+  hono.get("/", (c: Context) =>
+    c.text("Hello! Send a POST request to /users/new !")
+  );
 }
-
-// How do "context objects" work? Is it something that I could use? To pass data
-// around, but alos get various utilities when needed? Instead of doing a kind of
-// prop drilling, just passing things around...
