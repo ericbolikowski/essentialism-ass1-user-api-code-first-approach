@@ -6,7 +6,7 @@ import { UserRepository } from "./repository/user.repository";
 export async function bootstrapModule(hono: Hono) {
   console.log("boostrapping user module...");
 
-  const repo = await UserRepository.build();
+  const repo = async () => UserRepository.build();
   const useCase = new CreateUserUseCase(repo);
   const controller = new CreateUserController(useCase);
 
