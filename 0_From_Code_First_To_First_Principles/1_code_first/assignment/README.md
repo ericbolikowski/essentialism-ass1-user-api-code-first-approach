@@ -41,9 +41,21 @@ The following concepts have not been implemented, but could have been interestin
 
 Several artefacts are co-located with an interface. The idea is to separate the interface from the implementation, so that the interface can be used to define the contract between the artefact and its dependencies, and the implementation can be changed without affecting the interface. This is useful for testing, as it allows us to mock the dependencies of an artefact.
 
-## Root dependency injection blabla
+## Modular composition roots ("manual dependency injection")
 
-We use the blabla blabla bla
+The repository uses a technique called _modular composition roots_ which is a form of _manual dependency injection_. The idea is to define the dependencies of an artefact in a single place, so that they can be easily changed. This is useful for testing, as it allows us to mock the dependencies of an artefact.
+
+This is used in the `user` module's [`bootstrap.ts`](./src/modules/user/bootstrap.ts):
+
+```ts
+const repo = await UserRepository.build();
+// CreateUserUseCase needs the UserRepository, so we inject it here
+const useCase = new CreateUserUseCase(repo);
+// Same for CreateUserController which needs the CreateUserUseCase
+const controller = new CreateUserController(useCase);
+```
+
+## About the project dependencies
 
 ## Inspiration
 
