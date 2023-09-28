@@ -1,11 +1,11 @@
+import { MikroORM, PostgreSqlDriver } from "@mikro-orm/postgresql";
+import { errorToString } from "../../../libs/utils/error-to-string";
 import { Result } from "../../../libs/utils/result";
 import { UserEntity } from "../entities/user.entity";
 import {
-  IUserRepository,
-  UserRepositoryError,
+    IUserRepository,
+    UserRepositoryError,
 } from "./contracts/user.repository.interface";
-import { MikroORM, PostgreSqlDriver } from "@mikro-orm/postgresql";
-import { errorToString } from "../../../libs/utils/error-to-string";
 
 export class UserRepository implements IUserRepository {
   private constructor(private readonly orm: MikroORM) {}

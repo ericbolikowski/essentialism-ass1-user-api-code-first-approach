@@ -1,11 +1,8 @@
-import { IUseCase } from "../../../../../libs/ddd/use-case.interface";
 import { Log } from "../../../../../libs/log/log";
-import { Result } from "../../../../../libs/utils/result";
 import { UserEntity } from "../../../entities/user.entity";
 import { generateRandomPassword } from "../../../helpers/generate-random-password";
 import {
-  IUserRepository,
-  UserRepositoryError,
+    IUserRepository
 } from "../../../repository/contracts/user.repository.interface";
 import { CreateUserCommand } from "./contracts/create-user.command";
 import { ICreateUserUseCase } from "./contracts/create-user.use-case.interface";

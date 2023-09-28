@@ -1,12 +1,7 @@
-import { MikroORM } from "@mikro-orm/core";
 import { Context, Hono } from "hono";
-import type { PostgreSqlDriver } from "@mikro-orm/postgresql";
-import { error } from "console";
-import { UserEntity } from "./entities/user.entity";
-import mikroOrmConfig from "../..//config/mikro-orm.config";
-import { UserRepository } from "./repository/user.repository";
-import { CreateUserUseCase } from "./commands/use-cases/create-user/create-user.use-case";
 import { CreateUserController } from "./commands/use-cases/create-user/create-user.controller";
+import { CreateUserUseCase } from "./commands/use-cases/create-user/create-user.use-case";
+import { UserRepository } from "./repository/user.repository";
 
 export async function bootstrapModule(hono: Hono) {
   console.log("boostrapping user module...");
