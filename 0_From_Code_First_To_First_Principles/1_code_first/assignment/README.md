@@ -37,7 +37,7 @@ The following concepts have not been implemented, but could have been interestin
 
 - Events
 
-## Interface
+## Contracts and Interfaces
 
 Several artefacts are co-located with an interface. The idea is to separate the interface from the implementation, so that the interface can be used to define the contract between the artefact and its dependencies, and the implementation can be changed without affecting the interface. This is useful for testing, as it allows us to mock the dependencies of an artefact.
 
