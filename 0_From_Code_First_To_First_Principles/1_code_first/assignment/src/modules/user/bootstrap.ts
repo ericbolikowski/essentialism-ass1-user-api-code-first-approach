@@ -17,8 +17,8 @@ export async function bootstrapModule(hono: Hono) {
 
   hono.post("/users/new", async (c) => {
     const body = await c.req.json();
-    const result = await controller.invoke(body);
-    return c.json(result, result.httpStatusCode);
+    const { httpStatusCode, ...result } = await controller.invoke(body);
+    return c.json(result, httpStatusCode);
   });
   hono.get("/", (c: Context) =>
     c.text("Hello! Send a POST request to /users/new !")
