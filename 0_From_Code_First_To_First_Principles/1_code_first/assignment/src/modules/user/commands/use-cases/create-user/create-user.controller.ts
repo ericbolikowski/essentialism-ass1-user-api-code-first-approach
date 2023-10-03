@@ -5,6 +5,9 @@ import { ICreateUserController } from "./contracts/create-user.controller.interf
 import { CreateUserRequestDto } from "./contracts/create-user.request-dto";
 import { CreateUserResponseDto } from "./contracts/create-user.response-dto";
 import { ICreateUserUseCase } from "./contracts/create-user.use-case.interface";
+import { CreateUserCommand } from "./contracts/create-user.command";
+import { UserRepositoryError } from "../../../repository/contracts/user.repository.interface";
+import { CreateUserUseCase } from "./create-user.use-case";
 
 export class CreateUserController implements ICreateUserController {
   constructor(private readonly useCase: ICreateUserUseCase) {}
@@ -26,24 +29,41 @@ export class CreateUserController implements ICreateUserController {
       return new FailResponseDto(400, "ValidationError");
     }
 
-    const command = new CreateUserRequestDto();
+    const command = this.buildCreateUserCommand(dto);
+    const result = await this.useCase.execute(command);
+
+    if (result.isFailure) {
+      return this.handleCreateUserFailure(result);
+    }
+
+    return this.buildCreateUserResponse(result);
+  }
+
+  private buildCreateUserCommand(dto: CreateUserRequestDto): CreateUserCommand {
+    const command = new CreateUserCommand();
     command.email = dto.email;
     command.username = dto.username;
     command.firstName = dto.firstName;
     command.lastName = dto.lastName;
+    return command;
+  }
 
-    const result = await this.useCase.execute(command);
-
-    if (result.isFailure) {
-      if (result.errorType() === "EMAIL_ALREADY_EXISTS") {
+  private handleCreateUserFailure(
+    result: CreateUserUseCaseResult
+  ): FailResponseDto {
+    switch (result.errorType()) {
+      case "EMAIL_ALREADY_EXISTS":
         return new FailResponseDto(409, "EmailAlreadyInUse");
-      } else if (result.errorType() === "USERNAME_ALREADY_EXISTS") {
+      case "USERNAME_ALREADY_EXISTS":
         return new FailResponseDto(409, "UsernameAlreadyTaken");
-      } else {
+      default:
         return new FailResponseDto(500, "OtherError");
-      }
     }
+  }
 
+  private buildCreateUserResponse(
+    result: CreateUserUseCaseResult
+  ): CreateUserResponseDto {
     const user = result.getValue();
 
     return new CreateUserResponseDto(201, {
@@ -55,3 +75,9 @@ export class CreateUserController implements ICreateUserController {
     });
   }
 }
+
+// Some Typescript magic to get the return type of the Promise returned by
+// CreateUserUseCase's execute method.
+type CreateUserUseCaseResult = Awaited<
+  ReturnType<CreateUserUseCase["execute"]>
+>;
