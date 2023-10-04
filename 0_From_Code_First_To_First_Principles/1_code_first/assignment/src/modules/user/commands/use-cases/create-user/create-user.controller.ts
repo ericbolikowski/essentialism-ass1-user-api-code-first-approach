@@ -6,7 +6,6 @@ import { CreateUserRequestDto } from "./contracts/create-user.request-dto";
 import { CreateUserResponseDto } from "./contracts/create-user.response-dto";
 import { ICreateUserUseCase } from "./contracts/create-user.use-case.interface";
 import { CreateUserCommand } from "./contracts/create-user.command";
-import { UserRepositoryError } from "../../../repository/contracts/user.repository.interface";
 import { CreateUserUseCase } from "./create-user.use-case";
 
 export class CreateUserController implements ICreateUserController {

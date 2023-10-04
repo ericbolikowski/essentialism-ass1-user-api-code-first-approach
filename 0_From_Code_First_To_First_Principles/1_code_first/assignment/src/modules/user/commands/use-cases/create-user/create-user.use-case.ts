@@ -6,7 +6,9 @@ import { CreateUserCommand } from "./contracts/create-user.command";
 import { ICreateUserUseCase } from "./contracts/create-user.use-case.interface";
 
 export class CreateUserUseCase implements ICreateUserUseCase {
-  constructor(private readonly repository: () => Promise<IUserRepository>) {}
+  constructor(
+    private readonly buildRepository: () => Promise<IUserRepository>
+  ) {}
 
   @Log({
     startMessage: "Running CreateUser with input:",
@@ -22,8 +24,8 @@ export class CreateUserUseCase implements ICreateUserUseCase {
     user.lastName = message.lastName;
     user.password = generateRandomPassword();
 
-    const repo = await this.repository();
-    const result = await repo.createUser(user);
+    const repository = await this.buildRepository();
+    const result = await repository.createUser(user);
 
     return result;
   }
