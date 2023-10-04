@@ -3,8 +3,9 @@ import { errorToString } from "../../../libs/utils/error-to-string";
 import { Result } from "../../../libs/utils/result";
 import { UserEntity } from "../entities/user.entity";
 import {
-    IUserRepository,
-    UserRepositoryError,
+  IUserRepository,
+  UserRepositoryCreateUserError,
+  UserRepositoryGetUserError,
 } from "./contracts/user.repository.interface";
 
 export class UserRepository implements IUserRepository {
@@ -26,14 +27,14 @@ export class UserRepository implements IUserRepository {
 
   public async createUser(
     user: UserEntity
-  ): Promise<Result<UserEntity, UserRepositoryError>> {
+  ): Promise<Result<UserEntity, UserRepositoryCreateUserError>> {
     try {
       const em = this.orm.em.fork();
       await em.persistAndFlush(user);
       return Result.ok(user);
     } catch (err: any) {
       const errorAsString = errorToString(err);
-      let errorType: UserRepositoryError = "GENERIC";
+      let errorType: UserRepositoryCreateUserError = "GENERIC";
 
       if (
         err?.name === "UniqueConstraintViolationException" &&
@@ -48,6 +49,24 @@ export class UserRepository implements IUserRepository {
       }
 
       return Result.fail(errorAsString, errorType);
+    }
+  }
+
+  public async getUserByEmail(
+    email: string
+  ): Promise<Result<UserEntity, UserRepositoryGetUserError>> {
+    try {
+      const em = this.orm.em.fork();
+      const user = await em.findOne(UserEntity, { email });
+
+      if (!user) {
+        return Result.fail("User not found", "USER_NOT_FOUND");
+      }
+
+      return Result.ok(user);
+    } catch (err: any) {
+      const errorAsString = errorToString(err);
+      return Result.fail(errorAsString, "GENERIC");
     }
   }
 }
