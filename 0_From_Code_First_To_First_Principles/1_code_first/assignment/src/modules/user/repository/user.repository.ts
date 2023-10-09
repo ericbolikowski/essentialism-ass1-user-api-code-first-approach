@@ -5,6 +5,7 @@ import { UserEntity } from "../entities/user.entity";
 import {
   IUserRepository,
   UserRepositoryCreateUserError,
+  UserRepositoryEditUserError,
   UserRepositoryGetUserError,
 } from "./contracts/user.repository.interface";
 
@@ -52,6 +53,24 @@ export class UserRepository implements IUserRepository {
     }
   }
 
+  public async getUserById(
+    id: number
+  ): Promise<Result<UserEntity, UserRepositoryGetUserError>> {
+    try {
+      const em = this.orm.em.fork();
+      const user = await em.findOne(UserEntity, { id });
+
+      if (!user) {
+        return Result.fail("User not found", "USER_NOT_FOUND");
+      }
+
+      return Result.ok(user);
+    } catch (err: any) {
+      const errorAsString = errorToString(err);
+      return Result.fail(errorAsString, "GENERIC");
+    }
+  }
+
   public async getUserByEmail(
     email: string
   ): Promise<Result<UserEntity, UserRepositoryGetUserError>> {
@@ -63,6 +82,19 @@ export class UserRepository implements IUserRepository {
         return Result.fail("User not found", "USER_NOT_FOUND");
       }
 
+      return Result.ok(user);
+    } catch (err: any) {
+      const errorAsString = errorToString(err);
+      return Result.fail(errorAsString, "GENERIC");
+    }
+  }
+
+  public async editUser(
+    user: UserEntity
+  ): Promise<Result<UserEntity, UserRepositoryEditUserError>> {
+    try {
+      const em = this.orm.em.fork();
+      await em.persistAndFlush(user);
       return Result.ok(user);
     } catch (err: any) {
       const errorAsString = errorToString(err);

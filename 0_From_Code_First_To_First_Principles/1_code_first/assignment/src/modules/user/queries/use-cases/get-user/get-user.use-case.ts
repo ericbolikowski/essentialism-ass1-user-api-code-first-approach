@@ -9,7 +9,7 @@ export class GetUserUseCase implements IGetUserUseCase {
   ) {}
 
   @Log({
-    startMessage: "Running GetUser with input:",
+    startMessage: "Running GetUser use case with input:",
     logInputValues: true,
     endMessage: "Done, result:",
     logReturnValue: true,

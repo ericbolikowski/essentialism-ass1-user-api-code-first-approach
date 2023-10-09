@@ -11,7 +11,7 @@ export class CreateUserUseCase implements ICreateUserUseCase {
   ) {}
 
   @Log({
-    startMessage: "Running CreateUser with input:",
+    startMessage: "Running CreateUser use case with input:",
     logInputValues: true,
     endMessage: "Done, result:",
     logReturnValue: true,

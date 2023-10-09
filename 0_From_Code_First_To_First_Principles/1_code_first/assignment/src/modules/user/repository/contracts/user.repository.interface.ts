@@ -6,6 +6,7 @@ export type UserRepositoryCreateUserError =
   | "USERNAME_ALREADY_EXISTS"
   | "GENERIC";
 export type UserRepositoryGetUserError = "USER_NOT_FOUND" | "GENERIC";
+export type UserRepositoryEditUserError = "GENERIC";
 
 export interface IUserRepository {
   createUser(
@@ -14,4 +15,10 @@ export interface IUserRepository {
   getUserByEmail(
     email: string
   ): Promise<Result<UserEntity, UserRepositoryGetUserError>>;
+  getUserById(
+    id: number
+  ): Promise<Result<UserEntity, UserRepositoryGetUserError>>;
+  editUser(
+    user: UserEntity
+  ): Promise<Result<UserEntity, UserRepositoryEditUserError>>;
 }
