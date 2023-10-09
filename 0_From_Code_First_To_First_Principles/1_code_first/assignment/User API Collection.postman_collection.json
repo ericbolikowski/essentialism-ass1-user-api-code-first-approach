@@ -1,0 +1,91 @@
+{
+	"info": {
+		"_postman_id": "f2a9059c-4934-41ae-a650-7c352a70a98c",
+		"name": "User API Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "3083541"
+	},
+	"item": [
+		{
+			"name": "Create New User",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"sample100@email.com\",\n    \"username\": \"sample\",\n    \"firstName\": \"Sample\",\n    \"lastName\": \"User\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/users/new",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"users",
+						"new"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Edit User",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"edited@email.com\",\n    \"username\": \"editedUser\",\n    \"firstName\": \"Edited\",\n    \"lastName\": \"User\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/users/edit/1",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"users",
+						"edit",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get User by Email",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/users?email=sample100@email.com",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"users"
+					],
+					"query": [
+						{
+							"key": "email",
+							"value": "sample100@email.com"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
