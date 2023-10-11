@@ -34,7 +34,10 @@ export class EditUserUseCase implements IEditUserUseCase {
 
         return repository.editUser(user);
       }
-    ) as unknown as UserRepositoryEditUserReturnValue; // TODO: ugly - fix this
+      // TODO: ugly - fix this. I'd rather want automatic TS inference
+      // here to correctly find out what the return value of the final
+      // function in the pipe chain is.
+    ) as unknown as UserRepositoryEditUserReturnValue;
 
     return result;
   }
