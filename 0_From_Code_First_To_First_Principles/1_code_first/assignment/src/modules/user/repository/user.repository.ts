@@ -34,22 +34,7 @@ export class UserRepository implements IUserRepository {
       await em.persistAndFlush(user);
       return Result.ok(user);
     } catch (err: any) {
-      const errorAsString = errorToString(err);
-      let errorType: UserRepositoryCreateUserError = "GENERIC";
-
-      if (
-        err?.name === "UniqueConstraintViolationException" &&
-        err?.constraint === "users_email_unique"
-      ) {
-        errorType = "EMAIL_ALREADY_EXISTS";
-      } else if (
-        err?.name === "UniqueConstraintViolationException" &&
-        err?.constraint === "users_username_unique"
-      ) {
-        errorType = "USERNAME_ALREADY_EXISTS";
-      }
-
-      return Result.fail(errorAsString, errorType);
+      return this.onWriteUserBuildFailResult(err);
     }
   }
 
@@ -97,8 +82,29 @@ export class UserRepository implements IUserRepository {
       await em.persistAndFlush(user);
       return Result.ok(user);
     } catch (err: any) {
-      const errorAsString = errorToString(err);
-      return Result.fail(errorAsString, "GENERIC");
+      return this.onWriteUserBuildFailResult(err);
     }
+  }
+
+  private onWriteUserBuildFailResult(err: any) {
+    const errorAsString = errorToString(err);
+    let errorType: UserRepositoryCreateUserError = "GENERIC";
+
+    if (
+      err?.name === "UniqueConstraintViolationException" &&
+      err?.constraint === "users_email_unique"
+    ) {
+      errorType = "EMAIL_ALREADY_EXISTS";
+    } else if (
+      err?.name === "UniqueConstraintViolationException" &&
+      err?.constraint === "users_username_unique"
+    ) {
+      errorType = "USERNAME_ALREADY_EXISTS";
+    }
+
+    return Result.fail<
+      UserEntity,
+      UserRepositoryCreateUserError & UserRepositoryEditUserError
+    >(errorAsString, errorType);
   }
 }

@@ -6,7 +6,11 @@ export type UserRepositoryCreateUserError =
   | "USERNAME_ALREADY_EXISTS"
   | "GENERIC";
 export type UserRepositoryGetUserError = "USER_NOT_FOUND" | "GENERIC";
-export type UserRepositoryEditUserError = "GENERIC";
+export type UserRepositoryEditUserError =
+  | "USER_NOT_FOUND"
+  | "EMAIL_ALREADY_EXISTS"
+  | "USERNAME_ALREADY_EXISTS"
+  | "GENERIC";
 
 /**
  * Interface for the User Repository, which defines methods for interacting with user data.

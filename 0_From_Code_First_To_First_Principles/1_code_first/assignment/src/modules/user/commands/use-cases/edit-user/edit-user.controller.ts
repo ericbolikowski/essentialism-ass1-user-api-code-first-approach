@@ -51,7 +51,16 @@ export class EditUserController implements IEditUserController {
   private handleEditUserFailure(
     result: EditUserUseCaseResult
   ): FailResponseDto {
-    return new FailResponseDto(500, "OtherError");
+    switch (result.errorType()) {
+      case "USER_NOT_FOUND":
+        return new FailResponseDto(404, "UserNotFound");
+      case "EMAIL_ALREADY_EXISTS":
+        return new FailResponseDto(409, "EmailAlreadyInUse");
+      case "USERNAME_ALREADY_EXISTS":
+        return new FailResponseDto(409, "UsernameAlreadyTaken");
+      default:
+        return new FailResponseDto(500, "OtherError");
+    }
   }
 
   private buildEditUserResponse(result: EditUserUseCaseResult) {
