@@ -57,8 +57,6 @@ const useCase = new CreateUserUseCase(repo);
 const controller = new CreateUserController(useCase);
 ```
 
-## About the project dependencies
-
 ## Inspiration
 
 - https://github.com/Sairyss/domain-driven-hexagon
