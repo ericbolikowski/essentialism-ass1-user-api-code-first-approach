@@ -1,3 +1,4 @@
+import { fizzbuzz } from "./fizzbuzz"
 
 describe("fizzbuzz", () => {
   it("should return Fizz given 3", () => {
