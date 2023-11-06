@@ -1,3 +1,4 @@
 export function fizzbuzz(n: number) {
-  return "Fizz"
+  if (n === 3) return "Fizz"
+  if (n === 5) return "Buzz"
 }
