@@ -1,6 +1,7 @@
 export function fizzbuzz(n: number) {
-  if (n === 5) return "Buzz"
-  if (n === 15) return "FizzBuzz"
   const isFizz = n % 3 === 0
+  const isBuzz = n % 5 === 0
+  if (isFizz && isBuzz) return "FizzBuzz"
   if (isFizz) return "Fizz"
+  if (isBuzz) return "Buzz"
 }
