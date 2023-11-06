@@ -4,4 +4,5 @@ export function fizzbuzz(n: number) {
   if (isFizz && isBuzz) return "FizzBuzz"
   if (isFizz) return "Fizz"
   if (isBuzz) return "Buzz"
+  return n.toString()
 }
