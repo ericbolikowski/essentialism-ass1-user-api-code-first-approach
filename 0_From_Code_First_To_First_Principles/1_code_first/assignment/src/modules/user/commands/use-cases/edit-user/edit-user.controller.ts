@@ -1,18 +1,18 @@
 import { plainToClass } from "class-transformer";
+import { IEditUserController } from "./contracts/edit-user.controller.interface";
+import { IEditUserUseCase } from "./contracts/edit-user.use-case-interface";
+import { EditUserRequestDto } from "./contracts/edit-user.request-dto";
 import { validate } from "class-validator";
 import { FailResponseDto } from "../../../../../libs/api/fail.response.dto";
-import { ICreateUserController } from "./contracts/create-user.controller.interface";
-import { CreateUserRequestDto } from "./contracts/create-user.request-dto";
-import { CreateUserResponseDto } from "./contracts/create-user.response-dto";
-import { ICreateUserUseCase } from "./contracts/create-user.use-case.interface";
-import { CreateUserCommand } from "./contracts/create-user.command";
-import { CreateUserUseCase } from "./create-user.use-case";
+import { EditUserCommand } from "./contracts/edit-user.command";
+import { EditUserUseCase } from "./edit-user.use-case";
+import { EditUserResponseDto } from "./contracts/edit-user.response-dto";
 
-export class CreateUserController implements ICreateUserController {
-  constructor(private readonly useCase: ICreateUserUseCase) {}
+export class EditUserController implements IEditUserController {
+  constructor(private readonly useCase: IEditUserUseCase) {}
 
   async invoke(message: any) {
-    const dto = plainToClass(CreateUserRequestDto, message, {});
+    const dto = plainToClass(EditUserRequestDto, message, {});
     const errors = await validate(dto, {
       whitelist: true,
       forbidNonWhitelisted: true,
@@ -23,23 +23,24 @@ export class CreateUserController implements ICreateUserController {
       // detailed information returned from class-validaotr that could have been useful to
       // the user. We could consider returning that information. For now, we'll just log
       // it out.
-      console.error("CreateUser request failed with these validation errors:");
+      console.error("EditUser request failed with these validation errors:");
       console.log(errors);
       return new FailResponseDto(400, "ValidationError");
     }
 
-    const command = this.buildCreateUserCommand(dto);
+    const command = this.buildEditUserCommand(dto);
     const result = await this.useCase.execute(command);
 
     if (result.isFailure) {
-      return this.handleCreateUserFailure(result);
+      return this.handleEditUserFailure(result);
     }
 
-    return this.buildCreateUserResponse(result);
+    return this.buildEditUserResponse(result);
   }
 
-  private buildCreateUserCommand(dto: CreateUserRequestDto): CreateUserCommand {
-    const command = new CreateUserCommand();
+  private buildEditUserCommand(dto: EditUserRequestDto): EditUserCommand {
+    const command = new EditUserCommand();
+    command.id = dto.id;
     command.email = dto.email;
     command.username = dto.username;
     command.firstName = dto.firstName;
@@ -47,10 +48,12 @@ export class CreateUserController implements ICreateUserController {
     return command;
   }
 
-  private handleCreateUserFailure(
-    result: CreateUserUseCaseResult
+  private handleEditUserFailure(
+    result: EditUserUseCaseResult
   ): FailResponseDto {
     switch (result.errorType()) {
+      case "USER_NOT_FOUND":
+        return new FailResponseDto(404, "UserNotFound");
       case "EMAIL_ALREADY_EXISTS":
         return new FailResponseDto(409, "EmailAlreadyInUse");
       case "USERNAME_ALREADY_EXISTS":
@@ -60,12 +63,9 @@ export class CreateUserController implements ICreateUserController {
     }
   }
 
-  private buildCreateUserResponse(
-    result: CreateUserUseCaseResult
-  ): CreateUserResponseDto {
+  private buildEditUserResponse(result: EditUserUseCaseResult) {
     const user = result.getValue();
-
-    return new CreateUserResponseDto(201, {
+    return new EditUserResponseDto(200, {
       id: user.id,
       email: user.email,
       username: user.username,
@@ -77,6 +77,4 @@ export class CreateUserController implements ICreateUserController {
 
 // Some Typescript magic to get the return type of the Promise returned by
 // CreateUserUseCase's execute method.
-type CreateUserUseCaseResult = Awaited<
-  ReturnType<CreateUserUseCase["execute"]>
->;
+type EditUserUseCaseResult = Awaited<ReturnType<EditUserUseCase["execute"]>>;

@@ -4,6 +4,8 @@
 
 Run: `docker-compose up`
 
+You may test the three API endpoints by using Postman and importing the collection in [User API Collection.postman_collection.json](UserAPICollection.postman_collection.json)
+
 ## Note
 
 This is **intentionally over-engineered**. The goal was to learn and practise DDD concepts.
@@ -17,9 +19,9 @@ The assumption is that this approach means ...
 
 This project implements the following use cases:
 
-- Create a user ✅
-- Get a user ⏳
-- Edit a user ⏳
+- Create a user
+- Get a user
+- Edit a user
 
 ## Artefact Responsibilities
 
@@ -54,8 +56,6 @@ const useCase = new CreateUserUseCase(repo);
 // Same for CreateUserController which needs the CreateUserUseCase
 const controller = new CreateUserController(useCase);
 ```
-
-## About the project dependencies
 
 ## Inspiration
 

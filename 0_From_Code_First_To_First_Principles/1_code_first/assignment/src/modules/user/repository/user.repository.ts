@@ -3,8 +3,10 @@ import { errorToString } from "../../../libs/utils/error-to-string";
 import { Result } from "../../../libs/utils/result";
 import { UserEntity } from "../entities/user.entity";
 import {
-    IUserRepository,
-    UserRepositoryError,
+  IUserRepository,
+  UserRepositoryCreateUserError,
+  UserRepositoryEditUserError,
+  UserRepositoryGetUserError,
 } from "./contracts/user.repository.interface";
 
 export class UserRepository implements IUserRepository {
@@ -26,28 +28,83 @@ export class UserRepository implements IUserRepository {
 
   public async createUser(
     user: UserEntity
-  ): Promise<Result<UserEntity, UserRepositoryError>> {
+  ): Promise<Result<UserEntity, UserRepositoryCreateUserError>> {
     try {
       const em = this.orm.em.fork();
       await em.persistAndFlush(user);
       return Result.ok(user);
     } catch (err: any) {
-      const errorAsString = errorToString(err);
-      let errorType: UserRepositoryError = "GENERIC";
+      return this.onWriteUserBuildFailResult(err);
+    }
+  }
 
-      if (
-        err?.name === "UniqueConstraintViolationException" &&
-        err?.constraint === "users_email_unique"
-      ) {
-        errorType = "EMAIL_ALREADY_EXISTS";
-      } else if (
-        err?.name === "UniqueConstraintViolationException" &&
-        err?.constraint === "users_username_unique"
-      ) {
-        errorType = "USERNAME_ALREADY_EXISTS";
+  public async getUserById(
+    id: number
+  ): Promise<Result<UserEntity, UserRepositoryGetUserError>> {
+    try {
+      const em = this.orm.em.fork();
+      const user = await em.findOne(UserEntity, { id });
+
+      if (!user) {
+        return Result.fail("User not found", "USER_NOT_FOUND");
       }
 
-      return Result.fail(errorAsString, errorType);
+      return Result.ok(user);
+    } catch (err: any) {
+      const errorAsString = errorToString(err);
+      return Result.fail(errorAsString, "GENERIC");
     }
+  }
+
+  public async getUserByEmail(
+    email: string
+  ): Promise<Result<UserEntity, UserRepositoryGetUserError>> {
+    try {
+      const em = this.orm.em.fork();
+      const user = await em.findOne(UserEntity, { email });
+
+      if (!user) {
+        return Result.fail("User not found", "USER_NOT_FOUND");
+      }
+
+      return Result.ok(user);
+    } catch (err: any) {
+      const errorAsString = errorToString(err);
+      return Result.fail(errorAsString, "GENERIC");
+    }
+  }
+
+  public async editUser(
+    user: UserEntity
+  ): Promise<Result<UserEntity, UserRepositoryEditUserError>> {
+    try {
+      const em = this.orm.em.fork();
+      await em.persistAndFlush(user);
+      return Result.ok(user);
+    } catch (err: any) {
+      return this.onWriteUserBuildFailResult(err);
+    }
+  }
+
+  private onWriteUserBuildFailResult(err: any) {
+    const errorAsString = errorToString(err);
+    let errorType: UserRepositoryCreateUserError = "GENERIC";
+
+    if (
+      err?.name === "UniqueConstraintViolationException" &&
+      err?.constraint === "users_email_unique"
+    ) {
+      errorType = "EMAIL_ALREADY_EXISTS";
+    } else if (
+      err?.name === "UniqueConstraintViolationException" &&
+      err?.constraint === "users_username_unique"
+    ) {
+      errorType = "USERNAME_ALREADY_EXISTS";
+    }
+
+    return Result.fail<
+      UserEntity,
+      UserRepositoryCreateUserError & UserRepositoryEditUserError
+    >(errorAsString, errorType);
   }
 }
