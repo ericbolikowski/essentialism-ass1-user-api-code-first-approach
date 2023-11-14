@@ -1,4 +1,5 @@
 export function fizzbuzz(n: number) {
+  if (!isNumber(n)) throw new Error("Parameter `n` must be a number")
   if (n < 1 || n > 100) throw new Error("Number must be between 1 and 100")
   const isFizz = n % 3 === 0
   const isBuzz = n % 5 === 0
@@ -6,4 +7,8 @@ export function fizzbuzz(n: number) {
   if (isFizz) return "Fizz"
   if (isBuzz) return "Buzz"
   return n.toString()
+}
+
+function isNumber(n: any): n is number {
+  return typeof n === "number" && !isNaN(n)
 }
