@@ -84,4 +84,8 @@ describe("fizzbuzz", () => {
   it("should always return a string value given valid input, such as 5", () => {
     expect(typeof fizzbuzz(5)).toBe("string")
   })
+
+  it("should always return a string value given valid input, such as 100", () => {
+    expect(typeof fizzbuzz(100)).toBe("string")
+  })
 });
