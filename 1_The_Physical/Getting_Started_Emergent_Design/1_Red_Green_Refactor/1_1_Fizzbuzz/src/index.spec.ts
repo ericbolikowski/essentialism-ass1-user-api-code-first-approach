@@ -68,4 +68,8 @@ describe("fizzbuzz", () => {
   it("should throw an error given any non-number, such as -Infinity", () => {
     expect(() => fizzbuzz(-Infinity as any)).toThrowError()
   })
+
+  it("should throw an error given any non-number, such as Symbol", () => {
+    expect(() => fizzbuzz(Symbol() as any)).toThrowError()
+  })
 });
