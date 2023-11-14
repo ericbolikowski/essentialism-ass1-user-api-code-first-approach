@@ -48,4 +48,8 @@ describe("fizzbuzz", () => {
   it("should throw an error given any non-number, such as object", () => {
     expect(() => fizzbuzz({} as any)).toThrowError()
   })
+
+  it("should throw an error given any non-number, such as null", () => {
+    expect(() => fizzbuzz(null as any)).toThrowError()
+  })
 });
