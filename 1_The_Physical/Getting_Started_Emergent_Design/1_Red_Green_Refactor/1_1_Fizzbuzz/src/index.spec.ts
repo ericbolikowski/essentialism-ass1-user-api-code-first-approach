@@ -56,4 +56,8 @@ describe("fizzbuzz", () => {
   it("should throw an error given any non-number, such as undefined", () => {
     expect(() => fizzbuzz(undefined as any)).toThrowError()
   })
+
+  it("should throw an error given any non-number, such as NaN", () => {
+    expect(() => fizzbuzz(NaN as any)).toThrowError()
+  })
 });
