@@ -80,4 +80,8 @@ describe("fizzbuzz", () => {
   it("should throw an error given any non-number, such as array", () => {
     expect(() => fizzbuzz([] as any)).toThrowError()
   })
+
+  it("should always return a string value given valid input, such as 5", () => {
+    expect(typeof fizzbuzz(5)).toBe("string")
+  })
 });
