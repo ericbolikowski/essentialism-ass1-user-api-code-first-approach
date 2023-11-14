@@ -36,4 +36,8 @@ describe("fizzbuzz", () => {
   it ("should throw an error given -12", () => {
     expect(() => fizzbuzz(-12)).toThrowError("Number must be between 1 and 100")
   })
+
+  it ("should throw an error given any non-number, such as string", () => {
+    expect(() => fizzbuzz("hello" as any)).toThrowError()
+  })
 });
