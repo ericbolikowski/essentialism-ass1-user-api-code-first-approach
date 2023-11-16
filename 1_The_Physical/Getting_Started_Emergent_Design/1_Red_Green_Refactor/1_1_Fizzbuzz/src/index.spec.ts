@@ -5,71 +5,42 @@ describe("fizzbuzz", () => {
     expect(fizzbuzz(n)).toBe("Fizz")
   );
 
-  it("should return Buzz given 5", () => {
-    expect(fizzbuzz(5)).toBe("Buzz");
+  it.each([5])("should return Buzz given %p", (n: number) => {
+    expect(fizzbuzz(n)).toBe("Buzz");
   });
 
   it.each([15, 45])("return FizzBuzz given %p", (n: number) => {
     expect(fizzbuzz(n)).toBe("FizzBuzz");
   });
 
-  it("should return '43' given 43", () => {
-    expect(fizzbuzz(43)).toBe("43");
+  it.each([43])("should return '%p' given %p", (n: number) => {
+    expect(fizzbuzz(n)).toBe("43");
   });
 
-  it.each([-12, 102])("should throw an error given #p", (n: number) => {
+  it.each([-12, 102])("should throw an error given %p", (n: number) => {
     expect(() => fizzbuzz(n)).toThrowError("Number must be between 1 and 100");
   });
 
-  it("should throw an error given any non-number, such as string", () => {
-    expect(() => fizzbuzz("hello" as any)).toThrowError();
+  it.each([
+    "hello",
+    true,
+    {},
+    null,
+    undefined,
+    NaN,
+    Infinity,
+    -Infinity,
+    Symbol(),
+    () => {},
+    [],
+  ])("should throw an error given %p", (n: any) => {
+    expect(() => fizzbuzz(n)).toThrowError();
   });
 
-  it("should throw an error given any non-number, such as true", () => {
-    expect(() => fizzbuzz(true as any)).toThrowError();
-  });
-
-  it("should throw an error given any non-number, such as object", () => {
-    expect(() => fizzbuzz({} as any)).toThrowError();
-  });
-
-  it("should throw an error given any non-number, such as null", () => {
-    expect(() => fizzbuzz(null as any)).toThrowError();
-  });
-
-  it("should throw an error given any non-number, such as undefined", () => {
-    expect(() => fizzbuzz(undefined as any)).toThrowError();
-  });
-
-  it("should throw an error given any non-number, such as NaN", () => {
-    expect(() => fizzbuzz(NaN as any)).toThrowError();
-  });
-
-  it("should throw an error given any non-number, such as Infinity", () => {
-    expect(() => fizzbuzz(Infinity as any)).toThrowError();
-  });
-
-  it("should throw an error given any non-number, such as -Infinity", () => {
-    expect(() => fizzbuzz(-Infinity as any)).toThrowError();
-  });
-
-  it("should throw an error given any non-number, such as Symbol", () => {
-    expect(() => fizzbuzz(Symbol() as any)).toThrowError();
-  });
-
-  it("should throw an error given any non-number, such as function", () => {
-    expect(() => fizzbuzz((() => {}) as any)).toThrowError();
-  });
-
-  it("should throw an error given any non-number, such as array", () => {
-    expect(() => fizzbuzz([] as any)).toThrowError();
-  });
-
-  it("should always return a string value given valid input, such as 5", () => {
-    expect(typeof fizzbuzz(5)).toBe("string");
-  });
-
-  it("should always return a string value given valid input, such as 100", () => {
-    expect(typeof fizzbuzz(100)).toBe("string");
-  });
+  it.each([5, 100])(
+    "should always return a string value given valid input, such as %p",
+    (n: number) => {
+      expect(typeof fizzbuzz(n)).toBe("string");
+    }
+  );
 });
