@@ -1,7 +1,7 @@
 import { fizzbuzz } from "./fizzbuzz";
 
 describe("fizzbuzz", () => {
-  it.each([3, 9, 42])("returns Fizz given %p", (n: number) =>
+  it.each([3, 9, 42])("should return Fizz given %p", (n: number) =>
     expect(fizzbuzz(n)).toBe("Fizz")
   );
 
@@ -9,12 +9,12 @@ describe("fizzbuzz", () => {
     expect(fizzbuzz(n)).toBe("Buzz");
   });
 
-  it.each([15, 45])("return FizzBuzz given %p", (n: number) => {
+  it.each([15, 45])("should return FizzBuzz given %p", (n: number) => {
     expect(fizzbuzz(n)).toBe("FizzBuzz");
   });
 
-  it.each([43])("should return '%p' given %p", (n: number) => {
-    expect(fizzbuzz(n)).toBe("43");
+  it("should return '43' given 43", () => {
+    expect(fizzbuzz(43)).toBe("43");
   });
 
   it.each([-12, 102])("should throw an error given %p", (n: number) => {
