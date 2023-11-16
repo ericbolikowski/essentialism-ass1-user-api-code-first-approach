@@ -9,12 +9,8 @@ describe("fizzbuzz", () => {
     expect(fizzbuzz(5)).toBe("Buzz");
   });
 
-  it("should return FizzBuzz given 15", () => {
-    expect(fizzbuzz(15)).toBe("FizzBuzz");
-  });
-
-  it("should return FizzBuzz given 45", () => {
-    expect(fizzbuzz(45)).toBe("FizzBuzz");
+  it.each([15, 45])("return FizzBuzz given %p", (n: number) => {
+    expect(fizzbuzz(n)).toBe("FizzBuzz");
   });
 
   it("should return '43' given 43", () => {
