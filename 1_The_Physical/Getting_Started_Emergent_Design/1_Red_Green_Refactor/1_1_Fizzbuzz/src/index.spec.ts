@@ -5,11 +5,11 @@ describe("fizzbuzz", () => {
     expect(fizzbuzz(n)).toBe("Fizz")
   );
 
-  it.each([5])("should return Buzz given %p", (n: number) => {
+  it.each([5, 20, 50, 100])("should return Buzz given %p", (n: number) => {
     expect(fizzbuzz(n)).toBe("Buzz");
   });
 
-  it.each([15, 45])("should return FizzBuzz given %p", (n: number) => {
+  it.each([15, 45, 90])("should return FizzBuzz given %p", (n: number) => {
     expect(fizzbuzz(n)).toBe("FizzBuzz");
   });
 
