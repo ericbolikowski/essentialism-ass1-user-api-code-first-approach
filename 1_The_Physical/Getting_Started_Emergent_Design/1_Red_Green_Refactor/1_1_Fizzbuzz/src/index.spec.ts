@@ -28,7 +28,7 @@ describe("fizzbuzz", () => {
     "should throw an error given an out-of-[1,100]-range value, such as %p",
     (n: number) => {
       expect(() => fizzbuzz(n)).toThrowError(
-        "Number must be between 1 and 100"
+        "fizzbuzz: number must be between 1 and 100"
       );
     }
   );
